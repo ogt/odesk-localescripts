@@ -7,6 +7,12 @@ from math import radians, cos, sin, asin, sqrt
 
 
 
+'''
+Script parses custom city list, finds pairs with distance <= MAX_CITY_DISTANCE and writes matches to CSV file.
+'''
+
+
+
 CITY_DB_PATH = os.path.dirname(os.path.abspath(__file__)) + '/data/TARGET_city_list.csv'
 TARGET_CITY_DISTANCES_DB_PATH = os.path.dirname(os.path.abspath(__file__)) + '/data/TARGET_city_distance.csv'
 MAX_CITY_DISTANCE = 50 # miles

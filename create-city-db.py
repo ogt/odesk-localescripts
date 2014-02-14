@@ -5,12 +5,15 @@ import os
 from collections import defaultdict
 
 
+'''
+Script parses custom city list, finds matches in GeoNames database and writes matches to CSV file.
+'''
+
+
 
 CUSTOM_CITY_DB_PATH = os.path.dirname(os.path.abspath(__file__)) + '/data/city_list.csv'
-
 # Obtained from http://download.geonames.org/export/dump/cities1000.zip
 OFFICIAL_CITY_DB_PATH = os.path.dirname(os.path.abspath(__file__)) + '/data/cities1000.txt'
-
 TARGET_CITY_DB_PATH = os.path.dirname(os.path.abspath(__file__)) + '/data/TARGET_city_list.csv'
 
 
