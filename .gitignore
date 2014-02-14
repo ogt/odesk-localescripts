@@ -35,6 +35,9 @@ nosetests.xml
 .project
 .pydevproject
 
+# rope-vim
+.ropeproject
+
 # this project
 config.ini
 data/TARGET_*.csv
