@@ -1,9 +1,11 @@
 # coding: utf-8
 from __future__ import unicode_literals
 import csv
+import os
 from collections import defaultdict
 import odesk
 import locallib
+import sys
 
 
 
@@ -62,19 +64,25 @@ class CityDataManager(object):
     @classmethod
     def process(self, api_client, max_api_calls, city_db, city_distances_db, skill1_db, skill2_db, result_db):
         geonameid_to_name_map = self.load_custom_city_list_data(city_db)
-        result = []
         calls = 0
-        for city, skill, neighbor_cities  in self.get_skill_and_city_combinations(city_distances_db, skill1_db, skill2_db, geonameid_to_name_map):
-            if calls >= max_api_calls:
-                break
-            result.append((skill, city, self.fetch_count_from_api(api_client, city, skill, neighbor_cities)))
-            calls += 1
-        self.write_csv(result, result_db)
+        with open(result_db, 'wb') as csvfile:
+            writer = csv.writer(csvfile)
+            for city, skill, neighbor_cities in self.get_skill_and_city_combinations(city_distances_db, skill1_db, skill2_db, geonameid_to_name_map):
+                if calls >= max_api_calls:
+                    break
+                data = (skill, city, self.fetch_count_from_api(api_client, city, skill, neighbor_cities))
+                writer.writerow(data)
+                # flush every 100 rows
+                if calls % 100 == 0:
+                    csvfile.flush()
+                    os.fsync(csvfile.fileno())
+                calls += 1
 
 
 
     @classmethod
     def fetch_count_from_api(self, api_client, city, skill, neighbor_cities):
+        sys.stdout.write('.')
         query_data = {
             'q': ' OR '.join(['location:"%s"' % l for l in [city] + neighbor_cities]),
             'skills': [skill],
@@ -124,12 +132,6 @@ class CityDataManager(object):
         Covert string dict to unicode one.
         '''
         return {k.decode(encoding):v.decode(encoding) for k,v in row_dict.iteritems()}
-
-    @classmethod
-    def write_csv(self, data, target_db):
-        with open(target_db, 'wb') as csvfile:
-            writer = csv.writer(csvfile)
-            writer.writerows(data)
 
 
 
