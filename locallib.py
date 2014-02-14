@@ -13,3 +13,7 @@ def get_config():
     return config
 
 
+def get_absolute_path(file_path):
+    return os.path.dirname(os.path.abspath(__file__)) + '/' + file_path
+
+

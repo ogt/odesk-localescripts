@@ -1,20 +1,13 @@
 # coding: utf-8
 from __future__ import unicode_literals
 import csv
-import os
 from collections import defaultdict
+import locallib
 
 
 '''
 Script parses custom city list, finds matches in GeoNames database and writes matches to CSV file.
 '''
-
-
-
-CUSTOM_CITY_DB_PATH = os.path.dirname(os.path.abspath(__file__)) + '/data/city_list.csv'
-# Obtained from http://download.geonames.org/export/dump/cities1000.zip
-OFFICIAL_CITY_DB_PATH = os.path.dirname(os.path.abspath(__file__)) + '/data/cities1000.txt'
-TARGET_CITY_DB_PATH = os.path.dirname(os.path.abspath(__file__)) + '/data/TARGET_city_list.csv'
 
 
 
@@ -379,5 +372,10 @@ class CityManager(object):
 
 
 if __name__ == '__main__':
-    print CityManager.process(CUSTOM_CITY_DB_PATH, OFFICIAL_CITY_DB_PATH, TARGET_CITY_DB_PATH)
+    config = locallib.get_config()
+    print CityManager.process(
+        locallib.get_absolute_path(config.get('input','custom_city_db_path')),
+        locallib.get_absolute_path(config.get('input','official_city_db_path')),
+        locallib.get_absolute_path(config.get('output', 'target_city_db_path')),
+    )
 
