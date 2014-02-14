@@ -15,10 +15,6 @@ Script parses custom city and skill list and save statistics (based on oDesk API
 
 
 
-API_CALLS_LIMIT = 3
-
-
-
 class CustomCityDistancesImporter(csv.DictReader):
     fieldnames = [
         'geonameid1',
