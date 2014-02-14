@@ -40,7 +40,7 @@ nosetests.xml
 
 # this project
 config.ini
-data/TARGET_*.csv
+data/OUTPUT_*.csv
 data/cities1000.txt
 data/cities1000.zip
 data/city_list.csv
