@@ -60,12 +60,12 @@ class CustomSkills2Importer(csv.DictReader):
 
 class CityDataManager(object):
     @classmethod
-    def process(self, api_client, city_db, city_distances_db, skill1_db, skill2_db, result_db):
+    def process(self, api_client, max_api_calls, city_db, city_distances_db, skill1_db, skill2_db, result_db):
         geonameid_to_name_map = self.load_custom_city_list_data(city_db)
         result = []
         calls = 0
         for city, skill, neighbor_cities  in self.get_skill_and_city_combinations(city_distances_db, skill1_db, skill2_db, geonameid_to_name_map):
-            if calls >= API_CALLS_LIMIT:
+            if calls >= max_api_calls:
                 break
             result.append((skill, city, self.fetch_count_from_api(api_client, city, skill, neighbor_cities)))
             calls += 1
@@ -157,6 +157,7 @@ if __name__ == '__main__':
     config = locallib.get_config()
     print CityDataManager.process(
         ApiClientFactory.get_odesk_client(config.get('odesk', 'public_key'), config.get('odesk', 'secret_key')),
+        int(config.get('odesk', 'max_api_calls')),
         locallib.get_absolute_path(config.get('output', 'target_city_db_path')),
         locallib.get_absolute_path(config.get('output','target_city_distances_db_path')),
         locallib.get_absolute_path(config.get('input','custom_skills1_db_path')),

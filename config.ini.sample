@@ -2,6 +2,9 @@
 [odesk]
 public_key = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 secret_key = bbbbbbbbbbbbbbbb
+; script won't perform more than max_api_calls requests to API (authentication is not counted here, only searches etc.)
+; for production data it should be set to hube values like 10000000
+max_api_calls = 3
 
 
 [input]
