@@ -38,4 +38,7 @@ nosetests.xml
 data/TARGET_*.csv
 data/cities1000.txt
 data/cities1000.zip
+data/city_list.csv
+data/patternsCities2.txt
+data/skill_list.csv
 
