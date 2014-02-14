@@ -35,6 +35,8 @@ nosetests.xml
 .project
 .pydevproject
 
+# this project
+config.ini
 data/TARGET_*.csv
 data/cities1000.txt
 data/cities1000.zip

@@ -15,6 +15,7 @@ Configuration.
 
 2) Remove ".sample" suffix from filenames in data/
 
+3) Create config.ini based on config.ini.sample
 
 
 
