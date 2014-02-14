@@ -34,3 +34,8 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+data/TARGET_*.csv
+data/cities1000.txt
+data/cities1000.zip
+
