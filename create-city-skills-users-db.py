@@ -15,6 +15,11 @@ Script parses custom city and skill list and save statistics (based on oDesk API
 
 
 
+DEBUG=1
+API_CALLS_LIMIT = 3
+
+
+
 class CustomCityDistancesImporter(csv.DictReader):
     fieldnames = [
         'geonameid1',
@@ -83,13 +88,15 @@ class CityDataManager(object):
             'q': ' OR '.join(['location:"%s"' % l for l in [city] + neighbor_cities]),
             'skills': [skill],
         }
+        if DEBUG:
+            print query_data['q'] 
         return api_client.provider_v2.get('search/providers', data=query_data)['paging']['total']
 
     @classmethod
     def get_skill_and_city_combinations(self, city_distances_db, skill1_db, skill2_db, geonameid_to_name_map):
         for city, neighbor_cities in self.load_custom_city_distances_data(city_distances_db).iteritems():
             for skill in self.load_custom_skill_data(skill1_db, skill2_db):
-                yield city, skill, [geonameid_to_name_map[i] for i in neighbor_cities]
+                yield geonameid_to_name_map[city], skill, [geonameid_to_name_map[i] for i in neighbor_cities]
 
 
     @classmethod
